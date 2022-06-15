@@ -29,21 +29,19 @@ export async function kmsEncryptStream(filename:string) {
     const encFile = filename + '.encrypted'
     const writeable = createWriteStream(encFile)
     
-    readable.pipe(writeable)
+    readable.pipe(
+        encryptStream(keyring, {
+            suiteId:
+                AlgorithmSuiteIdentifier.ALG_AES256_GCM_IV12_TAG16_HKDF_SHA512_COMMIT_KEY,
+            encryptionContext: context,
+            frameLength: 1
+        })
+    ).pipe(writeable)
 
     writeable.on('finish', () => {
         console.log(`The new file name is ${encFile}.`);
-    })
+    })   
     
-    
-    
-    
-    // .on('readable', function() {
-    //     var chunk: any;
-    //     while (null !== (chunk = readable.read(1))) {
-    //         console.log(chunk);
-    //     }
-    // })
     await finishedAsync(readable)
 }
 
