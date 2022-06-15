@@ -1,4 +1,6 @@
-const http = require('http')
+const { register } = require('ts-node')
+const { compilerOptions } = require('./tsconfig.json')
+const  http  = require('http')
 
 const leak = []
 
@@ -9,31 +11,31 @@ function requestListener(req, res) {
         res.writeHead(200, { 'Content-Type': 'application/json' })
         res.write(resp)
         res.end()
-    } else if (req.url === '/getSushi') {
-        function veryHardMath() {
-            let endTime = Date.now() + (5 * 1000);
-            while (Date.now() < endTime) {
-                Math.random()
-            }
-        }
+    } else if (req.url === '/readRandom') {
+        // function kmsReadFile() {
+        //     return new Promise(resolve => {
+        //         resolve(runTS('./memory.ts'))
+        //     });
+        // }
 
-        function theSushiTable() {
-            return new Promise(resolve => {
-            resolve('🍣');
-            });
-        }
-
-        async function getSushi() {
-            let sushi = await theSushiTable();
-            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
-            res.write(`Enjoy! ${sushi}`);
-            res.end()
-        }
-        getSushi()
-        importantMath()
+        // async function readingFile() {
+        //     console.log("in read file");
+        //     let byteByByte = await kmsReadFile();
+        //     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        //     res.end()
+        // }
+        console.log("in readRandom");
+        // readingFile()
     } else {
         res.end('Invalid request')
     }
+}
+
+async function runTS(filePath) {
+    register({ compilerOptions });
+
+    const result = require(filePath);
+    return result.default || result;
 }
 
 const server = http.createServer(requestListener)
