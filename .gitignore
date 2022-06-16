@@ -3,3 +3,4 @@ node_modules/
 
 # Large files
 mem_leak_data1/*
+mem_leak_data_default/*
