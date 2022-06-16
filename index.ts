@@ -2,11 +2,20 @@ import express, { Response } from 'express'
 import { kmsDecryptStream, kmsEncryptStream } from './memory'
 
 const app  = express()
+const leak = []
 
 app.get('/', (req, res) => {
     res.write("Test")
     res.send()
     console.log("Back in home")
+})
+
+app.get('/now', (req, res) => {
+    let resp = JSON.stringify({ now: new Date() })
+    leak.push(JSON.parse(resp))
+    res.writeHead(200, { 'Content-Type': 'application/json' })
+    res.write(resp)
+    res.end()
 })
 
 app.get('/readRandom_1mb', (req, res) => {

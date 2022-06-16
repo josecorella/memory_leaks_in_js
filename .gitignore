@@ -1,2 +1,5 @@
 # Node modules
 node_modules/
+
+# Large files
+mem_leak_data1/*
