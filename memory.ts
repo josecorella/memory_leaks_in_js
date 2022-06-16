@@ -34,7 +34,7 @@ export async function kmsEncryptStream(filename:string) {
             suiteId:
                 AlgorithmSuiteIdentifier.ALG_AES256_GCM_IV12_TAG16_HKDF_SHA512_COMMIT_KEY,
             encryptionContext: context,
-            frameLength: 1000
+            frameLength: 100000
         })
     ).pipe(writeable.on('finish', () => {
         console.log(`The new file name is ${encFile}.`);
