@@ -31,6 +31,18 @@ app.get('/readRandom_1mbEnc', (req, res) => {
 
 })
 
+app.get('/readRandom_1gb', (req, res) => {
+    res.write("Attempt to encrypt large random")
+    readFile('./rand_1gb.txt')
+    res.send()
+})
+
+app.get('/readRandom_1gbEnc', (req, res) => {
+    res.write("Attempt to encrypt large random")
+    kmsDecryptStream('./rand_1gb.txt.encrypted')
+    res.send()
+})
+
 app.listen(3000, () => {
     console.log("Listening on port 3000");
     
